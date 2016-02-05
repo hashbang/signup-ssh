@@ -10,15 +10,15 @@ Over-SSH onboarding for new #! users.
 
 ## Design
 
-0. Should use the API rather than LDAP directly, so that compromising
+1. Should use the API rather than LDAP directly, so that compromising
    the custom SSHd is not critical.
-1. Should lookup the public keys against Github to see if they can be found.
+2. Should lookup the public keys against Github to see if they can be found.
    Use that to prefill the onboarding info (and hopefully make the user take
    note of that privacy issue).
-2. Should check for common SSH security issues (X11 forwarding, SSH agent
+3. Should check for common SSH security issues (X11 forwarding, SSH agent
    forwarding, GPG agent forwarding, `UseRoaming`, weak SSH keys, ...)
 
-Points 1 and 2 are already implemented in [whosthere],
+Points 2 and 3 are already implemented in [whosthere],
   which might be refactorable into a library.
 
 
