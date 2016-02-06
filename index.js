@@ -8,9 +8,21 @@ function noop(v) {}
 
 var ssh = new Server(config, function(client){
   var stream,
-      name;
+      name,
+	  key;
 
   client.on('authentication', function(ctx){
+
+	  name = ctx.username;
+
+	  if (ctx.method === 'password') {
+		  // You need to generate ssh key message
+		  console.log('Client connecting using password');
+		} else if ( ctx.method === 'publickey') {
+			key = ctx.key.data;
+			console.log('Client connecting using pubkey');
+		}
+
     return ctx.accept();
   });
 
