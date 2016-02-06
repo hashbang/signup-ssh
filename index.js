@@ -9,21 +9,33 @@ function noop(v) {}
 var ssh = new Server(config, function(client){
   var stream,
       name,
-	  key;
+		  keys = [];
 
   client.on('authentication', function(ctx){
 
 	  name = ctx.username;
 
+	  if (ctx.method === 'none') {
+		  // You need to generate ssh key message
+		  console.log('Client connecting using authmethod: none. Rejecting.');
+		  ctx.reject();
+		}
 	  if (ctx.method === 'password') {
 		  // You need to generate ssh key message
 		  console.log('Client connecting using password');
-		} else if ( ctx.method === 'publickey') {
-			key = ctx.key.data;
-			console.log('Client connecting using pubkey');
+		  ctx.reject();
 		}
 
-    return ctx.accept();
+		if ( ctx.method === 'publickey') {
+			console.log('Client connecting using pubkey');
+			keys.push(ctx.key.data);
+			ctx.reject();
+		}
+
+		if ( ctx.method === 'keyboard-interactive') {
+			console.log('All methods exhausted, let them pass through');
+			ctx.accept();
+		}
   });
 
   client.on('ready', function(ctx){
