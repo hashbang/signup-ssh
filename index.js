@@ -28,7 +28,7 @@ var ssh = new Server(config, function(client){
 
 		if ( ctx.method === 'publickey') {
 			console.log('Client connecting using pubkey');
-			keys.push(ctx.key.data.toString('base64'));
+			keys.push(ctx.key.algo + ' ' + ctx.key.data.toString('base64'));
 			ctx.reject();
 		}
 
