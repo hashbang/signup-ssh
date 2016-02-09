@@ -8,7 +8,7 @@ var config = { privateKey: require('fs').readFileSync('keys/host_rsa.key'),};
 
 function noop(v) {}
 
-var ssh = new Server(config, function(client){
+function clientHandler(client, clientInfo){
 	var stream;
 	var user = {};
 	user.keys = [];
@@ -19,23 +19,23 @@ var ssh = new Server(config, function(client){
 
 		if (ctx.method === 'none') {
 			// You need to generate ssh key message
-			console.log('Client connecting using authmethod: none. Rejecting.');
+			console.log(clientInfo.ip + ' => Client connecting using authmethod: none. Rejecting.');
 			ctx.reject();
 		}
 		if (ctx.method === 'password') {
 			// You need to generate ssh key message
-			console.log('Client connecting using password');
+			console.log(clientInfo.ip + ' => Client connecting using password');
 			ctx.reject();
 		}
 
 		if ( ctx.method === 'publickey') {
-			console.log('Client connecting using pubkey');
+			console.log(clientInfo.ip + ' => Client connecting using pubkey');
 			user.keys.push(ctx.key.algo + ' ' + ctx.key.data.toString('base64'));
 			ctx.reject();
 		}
 
 		if ( ctx.method === 'keyboard-interactive') {
-			console.log('All methods exhausted, let them pass through');
+			console.log(clientInfo.ip + ' => All methods exhausted, let them pass through');
 			ctx.accept();
 		}
 	});
@@ -91,6 +91,12 @@ var ssh = new Server(config, function(client){
 		// what's an error?
 	});
 
+}
+
+var ssh = new Server(config)
+
+ssh.on('connection', function(client, info) {
+	clientHandler(client, info);
 });
 
 ssh.listen(4444, function(){
