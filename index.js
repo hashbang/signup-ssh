@@ -84,7 +84,7 @@ function clientHandler(client, clientInfo){
 	}); //ready
 
 	client.on('end', function(){
-		console.log("Client disconnected");
+		console.log(clientInfo.ip + " => Client disconnected");
 	});
 
 	client.on('error', function(err){
