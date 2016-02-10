@@ -13,7 +13,7 @@ function clientHandler(client, clientInfo){
 	var user = {};
 	user.keys = [];
 
-	client.on('authentication', function(ctx){
+	function authHandler(ctx){
 
 		user.name = ctx.username || 'guest';
 
@@ -28,19 +28,19 @@ function clientHandler(client, clientInfo){
 			ctx.reject();
 		}
 
-		if ( ctx.method === 'publickey') {
+		if (ctx.method === 'publickey') {
 			console.log(clientInfo.ip + ' => Client connecting using pubkey');
 			user.keys.push(ctx.key.algo + ' ' + ctx.key.data.toString('base64'));
 			ctx.reject();
 		}
 
-		if ( ctx.method === 'keyboard-interactive') {
+		if (ctx.method === 'keyboard-interactive') {
 			console.log(clientInfo.ip + ' => All methods exhausted, let them pass through');
 			ctx.accept();
 		}
-	});
+	};
 
-	client.on('ready', function(ctx){
+	function ioHandler(ctx){
 		var rows,
 		cols,
 		term;
@@ -81,8 +81,10 @@ function clientHandler(client, clientInfo){
 				welcomeScreen(stream, term);
 			}); //shell
 		}); // session
-	}); //ready
+	}; //ready
 
+	client.on('authentication', authHandler);
+	client.on('ready', ioHandler);
 	client.on('end', function(){
 		console.log(clientInfo.ip + " => Client disconnected");
 	});
