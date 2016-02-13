@@ -21,18 +21,19 @@ function clientHandler(client, clientInfo){
 		if (ctx.method === 'none') {
 			// You need to generate ssh key message
 			console.log(clientInfo.ip + ' => Client connecting using authmethod: none. Rejecting.');
-			ctx.accept();
+			ctx.reject();
 		}
+
 		if (ctx.method === 'password') {
 			// You need to generate ssh key message
 			console.log(clientInfo.ip + ' => Client connecting using password');
-			ctx.accept();
+			ctx.reject();
 		}
 
 		if (ctx.method === 'publickey') {
 			console.log(clientInfo.ip + ' => Client connecting using pubkey');
 			user.keys.push(ctx.key.algo + ' ' + ctx.key.data.toString('base64'));
-			ctx.accept();
+			ctx.reject();
 		}
 
 		if (ctx.method === 'keyboard-interactive') {
@@ -79,10 +80,8 @@ function clientHandler(client, clientInfo){
 				stream.setRawMode = noop;
 				stream.on('error', noop);
 
-				console.log(user.keys == []);
-
 				if (user.keys.length == 0) {
-					console.log("user has no keys");
+					console.log("user has no keys, tell them how to create some");
 					generateKeysScreen(stream, term);
 				} else {
 					welcomeScreen(stream, term);
