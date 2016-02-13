@@ -2,7 +2,8 @@
 
 var Server = require('ssh2').Server;
 
-var welcomeScreen = require('./screens/welcome.js');
+var welcomeScreen = require('./screens/welcome.js'),
+	generateKeysScreen = require('./screens/generate-keys.js');
 
 var config = { privateKey: require('fs').readFileSync('keys/host_rsa.key'),};
 
@@ -20,18 +21,18 @@ function clientHandler(client, clientInfo){
 		if (ctx.method === 'none') {
 			// You need to generate ssh key message
 			console.log(clientInfo.ip + ' => Client connecting using authmethod: none. Rejecting.');
-			ctx.reject();
+			ctx.accept();
 		}
 		if (ctx.method === 'password') {
 			// You need to generate ssh key message
 			console.log(clientInfo.ip + ' => Client connecting using password');
-			ctx.reject();
+			ctx.accept();
 		}
 
 		if (ctx.method === 'publickey') {
 			console.log(clientInfo.ip + ' => Client connecting using pubkey');
 			user.keys.push(ctx.key.algo + ' ' + ctx.key.data.toString('base64'));
-			ctx.reject();
+			ctx.accept();
 		}
 
 		if (ctx.method === 'keyboard-interactive') {
@@ -78,7 +79,14 @@ function clientHandler(client, clientInfo){
 				stream.setRawMode = noop;
 				stream.on('error', noop);
 
-				welcomeScreen(stream, term);
+				console.log(user.keys == []);
+
+				if (user.keys.length == 0) {
+					console.log("user has no keys");
+					generateKeysScreen(stream, term);
+				} else {
+					welcomeScreen(stream, term);
+				}
 			}); //shell
 		}); // session
 	}; //ready
