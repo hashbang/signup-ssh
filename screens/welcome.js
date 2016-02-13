@@ -1,6 +1,6 @@
 var blessed = require('blessed')
 , contrib = require('blessed-contrib')
-, screenUtils = require('./screen-utils');
+, screenUtils = require('../utils/screen');
 
 module.exports = function (stream, term) {
 	var screen1 = screenUtils.screenFromStream(stream, term);
