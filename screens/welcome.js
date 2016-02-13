@@ -1,17 +1,9 @@
 var blessed = require('blessed')
 , contrib = require('blessed-contrib')
+, screenUtils = require('./screen-utils');
 
 module.exports = function (stream, term) {
-	var screen1 = new blessed.screen({
-		autoPadding: true,
-		smartCSR: true,
-		program: new blessed.program({
-			input: stream,
-			output: stream
-		}),
-		dockBorders: true,
-		terminal: term || 'ansi'
-	});
+	var screen1 = screenUtils.screenFromStream(stream, term);
 
 	var grid = new contrib.grid({rows: 12, cols: 12, hideBorder: true, screen: screen1})
 
@@ -23,11 +15,11 @@ module.exports = function (stream, term) {
 
 	box.focus();
 
-	screen1.key(['escape', 'q', 'C-c'], function(ch, key) {
+	screen1.key(['escape', 'q', 'S-q', 'C-c'], function(ch, key) {
 		stream.end();
 	});
 
-	screen1.key(['y', 'Y'], function(ch, key) {
+	screen1.key(['y', 'S-y'], function(ch, key) {
 		console.log('User pressed' + key);
 	});
 

@@ -2,7 +2,8 @@
 
 var Server = require('ssh2').Server;
 
-var welcomeScreen = require('./screens/welcome.js');
+var welcomeScreen = require('./screens/welcome.js'),
+	generateKeysScreen = require('./screens/generate-keys.js');
 
 var config = { privateKey: require('fs').readFileSync('keys/host_rsa.key'),};
 
@@ -22,6 +23,7 @@ function clientHandler(client, clientInfo){
 			console.log(clientInfo.ip + ' => Client connecting using authmethod: none. Rejecting.');
 			ctx.reject();
 		}
+
 		if (ctx.method === 'password') {
 			// You need to generate ssh key message
 			console.log(clientInfo.ip + ' => Client connecting using password');
@@ -78,7 +80,12 @@ function clientHandler(client, clientInfo){
 				stream.setRawMode = noop;
 				stream.on('error', noop);
 
-				welcomeScreen(stream, term);
+				if (user.keys.length == 0) {
+					console.log("user has no keys, tell them how to create some");
+					generateKeysScreen(stream, term);
+				} else {
+					welcomeScreen(stream, term);
+				}
 			}); //shell
 		}); // session
 	}; //ready
