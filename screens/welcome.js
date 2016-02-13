@@ -15,11 +15,11 @@ module.exports = function (stream, term) {
 
 	box.focus();
 
-	screen1.key(['escape', 'q', 'C-c'], function(ch, key) {
+	screen1.key(['escape', 'q', 'S-q', 'C-c'], function(ch, key) {
 		stream.end();
 	});
 
-	screen1.key(['y', 'Y'], function(ch, key) {
+	screen1.key(['y', 'S-y'], function(ch, key) {
 		console.log('User pressed' + key);
 	});
 
