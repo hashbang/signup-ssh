@@ -1,4 +1,4 @@
-var welcomeScreen = require('../screens/welcome.js'),
+var userdetails = require('../screens/userdetails.js'),
 	generateKeysScreen = require('../screens/generate-keys.js');
 
 function noop(v) {}
@@ -78,7 +78,7 @@ function clientHandler(client, clientInfo){
 					console.log("user has no keys, tell them how to create some");
 					generateKeysScreen(stream, term);
 				} else {
-					welcomeScreen(stream, term);
+					userdetails(stream, term, user);
 				}
 			}); //shell
 		}); // session
