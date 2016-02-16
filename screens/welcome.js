@@ -1,8 +1,9 @@
 var blessed = require('blessed')
 , contrib = require('blessed-contrib')
-, screenUtils = require('../utils/screen');
+, screenUtils = require('../utils/screen')
+, userdetails = require('./userdetails.js');
 
-module.exports = function (stream, term) {
+module.exports = function (stream, term, user) {
 	var screen1 = screenUtils.screenFromStream(stream, term);
 
 	var grid = new contrib.grid({rows: 12, cols: 12, hideBorder: true, screen: screen1})
@@ -20,7 +21,7 @@ module.exports = function (stream, term) {
 	});
 
 	screen1.key(['y', 'S-y'], function(ch, key) {
-		console.log('User pressed' + key);
+		userdetails(stream, term, user);
 	});
 
 	screen1.render();
