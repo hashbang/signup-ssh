@@ -1,0 +1,16 @@
+{
+  "name": "new.hashbang.sh",
+  "version": "1.0.0",
+  "description": "User creation script for #!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Aagat Adhikari <hi@aagat.com>",
+  "license": "MIT",
+  "dependencies": {
+    "blessed": "^0.1.81",
+    "blessed-contrib": "^3.5.5",
+    "ssh2": "^0.5.0"
+  }
+}
