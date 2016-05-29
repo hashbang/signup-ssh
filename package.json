@@ -18,7 +18,7 @@
   "homepage": "https://github.com/hashbang/new.hashbang.sh#readme",
   "dependencies": {
     "blessed": "^0.1.81",
-    "blessed-contrib": "^2.5.3",
-    "ssh2": "^0.4.13"
+    "blessed-contrib": "^3.5.5",
+    "ssh2": "^0.5.0"
   }
 }
