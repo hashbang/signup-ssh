@@ -18,16 +18,11 @@ Over-SSH onboarding for new #! users.
 3. Should check for common SSH security issues (X11 forwarding, SSH agent
    forwarding, GPG agent forwarding, `UseRoaming`, weak SSH keys, ...)
 
-Points 2 and 3 are already implemented in [whosthere],
-  which might be refactorable into a library.
-
-
-[whosthere]: https://github.com/FiloSottile/whosthere
 
 ## UX thoughts
 
 - Instead of a sequence of questions, this could be an actual curse-style
-  form.  Look at [termui] for a potential curses widgets library.
+  form. Current version is implemented using [blessed-contrib]
 
 
-[termui]: https://github.com/gizak/termui
+[blessed-contrib]: https://github.com/yaronn/blessed-contrib
