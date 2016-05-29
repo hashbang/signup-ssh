@@ -10,13 +10,17 @@ Over-SSH onboarding for new #! users.
 
 ## Design
 
-1. Should use the API rather than LDAP directly, so that compromising
-   the custom SSHd is not critical.
-2. Should lookup the public keys against Github to see if they can be found.
-   Use that to prefill the onboarding info (and hopefully make the user take
-   note of that privacy issue).
-3. Should check for common SSH security issues (X11 forwarding, SSH agent
-   forwarding, GPG agent forwarding, `UseRoaming`, weak SSH keys, ...)
+- [ ] Should use the API rather than LDAP directly, so that compromising
+      the custom SSHd is not critical.
+- [ ] Should lookup the public keys against Github to see if they can be found.
+      Use that to prefill the onboarding info (and hopefully make the user take
+      note of that privacy issue).
+- [ ] Should check for common SSH security issues:
+  - [ ] X11 forwarding
+  - [ ] SSH agent forwarding
+  - [ ] GPG agent forwarding
+  - [ ] `UseRoaming`
+  - [ ] weak SSH keys
 
 
 ## UX thoughts
