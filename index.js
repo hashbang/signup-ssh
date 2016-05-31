@@ -3,7 +3,7 @@ const Server = require('ssh2').Server,
 
 const config = { hostKeys: [require('fs').readFileSync('keys/host_rsa.key')] };
 
-let ssh = new Server(config)
+let ssh = new Server(config);
 
 ssh.on('connection', connectionHandler);
 
