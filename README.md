@@ -26,7 +26,7 @@ Over-SSH onboarding for new #! users.
 ## UX thoughts
 
 - Instead of a sequence of questions, this could be an actual curse-style
-  form. Current version is implemented using [blessed-contrib]
+  form. Current version is implemented using [blessed] and [blessed-contrib]
 
-
+[blessed]: https://github.com/chjj/blessed
 [blessed-contrib]: https://github.com/yaronn/blessed-contrib
