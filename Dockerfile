@@ -29,7 +29,7 @@ EXPOSE 4444
 # Ensure node modules are layer-cached until dependency files change
 ADD npm-shrinkwrap.json /tmp/npm-shrinkwrap.json
 ADD package.json /tmp/package.json
-RUN cd /opt/app && \
+RUN cd /tmp && \
     npm update -g && \
     npm install
 
