@@ -1,24 +1,25 @@
 {
-  "name": "new.hashbang.sh",
+  "name": "signup-ssh",
   "version": "1.0.0",
   "description": "Over SSH onboarding",
   "main": "index.js",
-  "scripts": {
-    "test": "mocha"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hashbang/new.hashbang.sh.git"
+    "url": "git+https://github.com/hashbang/signup-ssh.git"
   },
   "author": "Aagat Adhikari <hi@aagat.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hashbang/new.hashbang.sh/issues"
+    "url": "https://github.com/hashbang/signup-ssh/issues"
   },
-  "homepage": "https://github.com/hashbang/new.hashbang.sh#readme",
+  "homepage": "https://github.com/hashbang/signup-ssh#readme",
   "dependencies": {
     "blessed": "^0.1.81",
     "blessed-contrib": "^3.5.5",
     "ssh2": "^0.5.0"
+  },
+  "scripts": {
+    "start": "node $V8_OPTIONS index.js",
+    "test": "mocha"
   }
 }
