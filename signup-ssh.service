@@ -1,0 +1,17 @@
+Description=#! SSH Signup Service
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+ExecStartPre=-/usr/bin/docker pull hashbang/signup-ssh
+ExecStartPre=-/usr/bin/docker kill signup-ssh
+ExecStartPre=-/usr/bin/docker rm signup-ssh
+ExecStart=/usr/bin/docker run \
+  -p 22:4444 \
+  --name="signup-ssh"
+  hashbang/signup-ssh
+ExecStop=/usr/bin/docker stop signup-ssh
+
+[Install]
+WantedBy=multi-user.target
